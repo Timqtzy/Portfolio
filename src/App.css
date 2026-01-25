@@ -1,1 +1,29 @@
 @import "tailwindcss";
+@import "lenis/dist/lenis.css";
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.hero-greeting,
+.hero-description,
+.hero-socials > *,
+.hero-image,
+.nav-item,
+.project-card,
+.section-title,
+.about-text,
+.tech-item,
+.experience-item,
+.contact-content {
+  visibility: visible;
+}
