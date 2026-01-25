@@ -10,7 +10,12 @@ import { FaRegEnvelope } from "react-icons/fa";
 import { RiDiscordLine } from "react-icons/ri";
 import { FiGithub } from "react-icons/fi";
 import { FileDown, MapPin, Menu, X } from "lucide-react";
-import { projects, projectTags, socialLinks, technologies } from "./data/projects";
+import {
+  projects,
+  projectTags,
+  socialLinks,
+  technologies,
+} from "./data/projects";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -29,9 +34,15 @@ function App() {
     reply_to: "",
     message: "",
   });
+  const [honeypot, setHoneypot] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const [submitStatus, setSubmitStatus] = useState<
+    "idle" | "success" | "error" | "rate_limited"
+  >("idle");
+  const [cooldownRemaining, setCooldownRemaining] = useState(0);
   const formRef = useRef<HTMLFormElement>(null);
+
+  const COOLDOWN_SECONDS = 60;
 
   const scrollToSection = (sectionId: string, label: string) => {
     setActive(label);
@@ -42,6 +53,23 @@ function App() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
+    if (honeypot) {
+      setSubmitStatus("success");
+      return;
+    }
+
+    const lastSubmit = localStorage.getItem("lastContactSubmit");
+    if (lastSubmit) {
+      const timeSince = (Date.now() - parseInt(lastSubmit)) / 1000;
+      if (timeSince < COOLDOWN_SECONDS) {
+        const remaining = Math.ceil(COOLDOWN_SECONDS - timeSince);
+        setCooldownRemaining(remaining);
+        setSubmitStatus("rate_limited");
+        return;
+      }
+    }
+
     setIsSubmitting(true);
     setSubmitStatus("idle");
 
@@ -54,6 +82,7 @@ function App() {
       );
       setSubmitStatus("success");
       setFormData({ from_name: "", reply_to: "", message: "" });
+      localStorage.setItem("lastContactSubmit", Date.now().toString());
     } catch {
       setSubmitStatus("error");
     } finally {
@@ -92,7 +121,7 @@ function App() {
     ];
 
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 100; 
+      const scrollPosition = window.scrollY + 100;
 
       for (const section of sections) {
         const element = document.getElementById(section.id);
@@ -110,7 +139,7 @@ function App() {
     };
 
     window.addEventListener("scroll", handleScroll);
-    handleScroll(); 
+    handleScroll();
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -290,7 +319,6 @@ function App() {
             <p className="text-gray-500 text-[0.80rem]">Frontend Developer</p>
           </div>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center">
             <div className="bg-white border border-gray-300 flex gap-2 lg:gap-4 p-1 rounded-md nav-item">
               {[
@@ -362,7 +390,11 @@ function App() {
           <div className="max-w-xl text-center md:text-left">
             <div className="hero-greeting">
               <span className="text-3xl md:text-4xl font-medium">I'm</span>
-              <span className="text-3xl md:text-4xl text-red-400 font-medium"> Tim</span>,
+              <span className="text-3xl md:text-4xl text-red-400 font-medium">
+                {" "}
+                Tim
+              </span>
+              ,
             </div>
             <p className="text-lg md:text-xl text-gray-700 hero-description">
               a college student passionate about web development with a growing
@@ -441,7 +473,7 @@ function App() {
           {projects
             .filter(
               (project) =>
-                activeFilter === "All" || project.tags.includes(activeFilter)
+                activeFilter === "All" || project.tags.includes(activeFilter),
             )
             .map((project) => (
               <article
@@ -498,14 +530,20 @@ function App() {
 
                 <div className="flex flex-wrap justify-center gap-4 text-gray-500">
                   <p className="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg">
-                    <MapPin className="w-4 h-4 text-red-400" aria-hidden="true" />
+                    <MapPin
+                      className="w-4 h-4 text-red-400"
+                      aria-hidden="true"
+                    />
                     Pampanga, Philippines
                   </p>
                   <a
                     href={socialLinks.email}
                     className="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg hover:bg-gray-100 transition"
                   >
-                    <FaRegEnvelope className="w-4 h-4 text-red-400" aria-hidden="true" />
+                    <FaRegEnvelope
+                      className="w-4 h-4 text-red-400"
+                      aria-hidden="true"
+                    />
                     Email Me
                   </a>
                 </div>
@@ -515,19 +553,21 @@ function App() {
                 <article className="about-text">
                   <h3 className="font-semibold text-xl mb-2">Who I Am</h3>
                   <p className="text-gray-500 text-lg leading-relaxed">
-                    I'm <span className="font-semibold text-red-400">Timothy</span>,
+                    I'm{" "}
+                    <span className="font-semibold text-red-400">Timothy</span>,
                     a college student and frontend developer who enjoys crafting
-                    clean, responsive, and user-focused web experiences. I focus on
-                    intuitive interfaces, accessibility, and performance.
+                    clean, responsive, and user-focused web experiences. I focus
+                    on intuitive interfaces, accessibility, and performance.
                   </p>
                 </article>
 
                 <article className="about-text">
                   <h3 className="font-semibold text-xl mb-2">What I Do</h3>
                   <p className="text-gray-500 text-lg leading-relaxed">
-                    Beyond frontend development, I explore automation and workflow
-                    optimization using tools like n8n. I build automated processes
-                    that connect APIs, manage data, and reduce repetitive tasks.
+                    Beyond frontend development, I explore automation and
+                    workflow optimization using tools like n8n. I build
+                    automated processes that connect APIs, manage data, and
+                    reduce repetitive tasks.
                   </p>
                 </article>
 
@@ -627,7 +667,9 @@ function App() {
                   </div>
                   <div>
                     <p className="font-medium">Email</p>
-                    <p className="text-gray-500 text-sm">timothytenido@gmail.com</p>
+                    <p className="text-gray-500 text-sm">
+                      timothytenido@gmail.com
+                    </p>
                   </div>
                 </a>
 
@@ -642,7 +684,9 @@ function App() {
                   </div>
                   <div>
                     <p className="font-medium">GitHub</p>
-                    <p className="text-gray-500 text-sm">Check out my projects</p>
+                    <p className="text-gray-500 text-sm">
+                      Check out my projects
+                    </p>
                   </div>
                 </a>
 
@@ -671,8 +715,22 @@ function App() {
                 onSubmit={handleSubmit}
                 className="flex flex-col gap-4"
               >
+                <input
+                  type="text"
+                  name="website"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  className="absolute -left-2499.75 opacity-0 pointer-events-none"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                />
+
                 <div>
-                  <label htmlFor="from_name" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label
+                    htmlFor="from_name"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
                     Name
                   </label>
                   <input
@@ -681,14 +739,19 @@ function App() {
                     name="from_name"
                     required
                     value={formData.from_name}
-                    onChange={(e) => setFormData({ ...formData, from_name: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, from_name: e.target.value })
+                    }
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400 focus:border-transparent outline-none transition"
                     placeholder="Your name"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="reply_to" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label
+                    htmlFor="reply_to"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
                     Email
                   </label>
                   <input
@@ -697,14 +760,19 @@ function App() {
                     name="reply_to"
                     required
                     value={formData.reply_to}
-                    onChange={(e) => setFormData({ ...formData, reply_to: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, reply_to: e.target.value })
+                    }
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400 focus:border-transparent outline-none transition"
                     placeholder="your@email.com"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label
+                    htmlFor="message"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
                     Message
                   </label>
                   <textarea
@@ -713,7 +781,9 @@ function App() {
                     required
                     rows={5}
                     value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, message: e.target.value })
+                    }
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400 focus:border-transparent outline-none transition resize-none"
                     placeholder="Your message..."
                   />
@@ -735,6 +805,12 @@ function App() {
                 {submitStatus === "error" && (
                   <p className="text-red-600 text-center font-medium">
                     Failed to send. Please try again.
+                  </p>
+                )}
+                {submitStatus === "rate_limited" && (
+                  <p className="text-amber-600 text-center font-medium">
+                    Please wait {cooldownRemaining}s before sending another
+                    message.
                   </p>
                 )}
               </form>
