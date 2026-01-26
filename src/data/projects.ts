@@ -3,6 +3,7 @@ import spamadmin from "../assets/spamadminsite.png";
 import fonzo from "../assets/fonzosite.png";
 import newjeans from "../assets/newjeanssite.png";
 import photobooth from "../assets/photoboothsite.png";
+import airbnb from "../assets/airbnbsite.png";
 
 export interface Project {
   title: string;
@@ -53,6 +54,14 @@ export const projects: Project[] = [
     image: newjeans,
     tags: ["React", "Frontend"],
     links: "https://newjeans-web.vercel.app"
+  },
+  {
+    title: "Airbnb Studio",
+    description:
+      "Interactive price and availability prediction tool for Airbnb hosts using XGBoost and Random Forest with monthly trend analysis.",
+    image: airbnb,
+    tags: ["Python", "Streamlit"],
+    links: "https://airbnb-studio-y8v2u46evbu79rmkufjdw3.streamlit.app/",                                                                                                                                                                                    
   },
 ];
 
