@@ -1,55 +1,58 @@
-import logo from "../assets/Changli.jpg";
+import spamsite from "../assets/spamsite.png";
+import spamadmin from "../assets/spamadminsite.png";
+import fonzo from "../assets/fonzosite.png";
+import newjeans from "../assets/newjeanssite.png";
+import photobooth from "../assets/photoboothsite.png";
 
 export interface Project {
   title: string;
   description: string;
   image: string;
   tags: string[];
+  links?: string;
   github?: string;
   live?: string;
 }
 
 export const projects: Project[] = [
   {
-    title: "Portfolio Website",
+    title: "School Press Advisers' Movement, Inc. Website",
     description:
-      "A personal portfolio built with React, Vite, and Tailwind CSS.",
-    image: logo,
-    tags: ["React", "Frontend"],
+      "Advocating Responsible Campus Journalism",
+    image: spamsite,
+    tags: ["React", "Frontend", "MongoDB"],
+    links: "https://spamorganizations-main.vercel.app",
+  },{
+    title: "School Press Advisers' Movement, Inc. Website Admin",
+    description:
+      "Advocating Responsible Campus Journalism - Admin Panel",
+    image: spamadmin,
+    tags: ["React", "Frontend", "MongoDB"],
+    links: "https://spamorganizations-main.vercel.app",
   },
   {
-    title: "Admin Dashboard",
+    title: "Fonzo Calibration",
     description:
-      "CRUD-based admin panel using React, Express, MongoDB, and JWT.",
-    image: logo,
-    tags: ["React", "Full Stack", "MongoDB"],
+      "Frontend and CRUD-based admin panel using React, Postgres, and JWT.",
+    image: fonzo,
+    tags: ["React", "Full Stack", "PostgreSQL"],
+    links: "https://fonzo-clibrations.vercel.app",
   },
   {
     title: "Photo Booth App",
     description:
       "A web-based photo booth with camera capture and image filters.",
-    image: logo,
+    image: photobooth,
     tags: ["React", "Frontend"],
+    links: "https://tim-booth.vercel.app",
   },
   {
-    title: "Event Registration System",
+    title: "Newjeans UI Design",
     description:
-      "Online registration system with form validation and database storage.",
-    image: logo,
-    tags: ["React", "Full Stack"],
-  },
-  {
-    title: "Blog CMS",
-    description: "Content management system with Cloudinary image uploads.",
-    image: logo,
-    tags: ["React", "Full Stack", "MongoDB"],
-  },
-  {
-    title: "POS System",
-    description:
-      "Coffee shop POS system with cart, receipt, and transaction history.",
-    image: logo,
+      "Newjeans UI frontend design with responsive layout and animations.",
+    image: newjeans,
     tags: ["React", "Frontend"],
+    links: "https://newjeans-web.vercel.app"
   },
 ];
 

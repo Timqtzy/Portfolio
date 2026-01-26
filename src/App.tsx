@@ -469,7 +469,7 @@ function App() {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
           {projects
             .filter(
               (project) =>
@@ -483,9 +483,16 @@ function App() {
                 <img
                   src={project.image}
                   alt={`Screenshot of ${project.title}`}
-                  className="rounded-md mb-3"
+                  className="rounded-md mb-3 "
                 />
-                <h3 className="font-semibold text-2xl">{project.title}</h3>
+                <a
+                  href={project.links || "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <h3 className="font-semibold text-2xl hover:text-red-500">{project.title}</h3>
+                </a>
+
                 <p className="text-gray-500 text-sm font-medium mb-2">
                   {project.description}
                 </p>
