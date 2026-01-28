@@ -5,7 +5,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
-import logo from "./assets/Changli.jpg";
+import logo from "./assets/Changli.webp";
 import { FaRegEnvelope } from "react-icons/fa";
 import { RiDiscordLine } from "react-icons/ri";
 import { FiGithub } from "react-icons/fi";
@@ -460,7 +460,7 @@ function App() {
               onClick={() => setActiveFilter(tag)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition ${
                 activeFilter === tag
-                  ? "bg-red-400 text-white"
+                  ? "bg-red-600 text-white"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
               }`}
             >
@@ -483,7 +483,9 @@ function App() {
                 <img
                   src={project.image}
                   alt={`Screenshot of ${project.title}`}
-                  className="rounded-md mb-3 "
+                  className="rounded-md mb-3"
+                  loading="lazy"
+                  
                 />
                 <a
                   href={project.links || "#"}
@@ -529,6 +531,7 @@ function App() {
                     src={logo}
                     alt="Timothy - Frontend Developer"
                     className="w-full max-w-xs mx-auto rounded-2xl object-cover shadow-lg"
+                    loading="lazy"
                   />
                   <div className="absolute -bottom-3 -right-3 md:right-auto md:-left-3 bg-red-400 text-white px-4 py-2 rounded-lg text-sm font-medium shadow-md">
                     Open to Work

@@ -1,9 +1,9 @@
-import spamsite from "../assets/spamsite.png";
-import spamadmin from "../assets/spamadminsite.png";
-import fonzo from "../assets/fonzosite.png";
-import newjeans from "../assets/newjeanssite.png";
-import photobooth from "../assets/photoboothsite.png";
-import airbnb from "../assets/airbnbsite.png";
+import spamsite from "../assets/spamsite.webp";
+import spamadmin from "../assets/spamadminsite.webp";
+import fonzo from "../assets/fonzosite.webp";
+import newjeans from "../assets/newjeanssite.webp";
+import photobooth from "../assets/photoboothsite.webp";
+import airbnb from "../assets/airbnbsite.webp";
 
 export interface Project {
   title: string;
