@@ -427,7 +427,7 @@ function App() {
                 <RiDiscordLine className="w-full h-full" />
               </a>
               <a
-                href="/resume.pdf"
+                href="/Resume.pdf"
                 download
                 className="flex items-center gap-2 bg-white border border-gray-300 px-4 py-2 rounded-md text-black font-semibold cursor-pointer hover:bg-gray-50 transition text-sm md:text-base"
               >
