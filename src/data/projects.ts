@@ -1,9 +1,7 @@
-import spamsite from "../assets/spamsite.webp";
-import spamadmin from "../assets/spamadminsite.webp";
 import fonzo from "../assets/fonzosite.webp";
 import newjeans from "../assets/newjeanssite.webp";
-import photobooth from "../assets/photoboothsite.webp";
-import airbnb from "../assets/airbnbsite.webp";
+import spamadmin from "../assets/spamadminsite.webp";
+import spamsite from "../assets/spamsite.webp";
 
 export interface Project {
   title: string;
@@ -13,6 +11,7 @@ export interface Project {
   links?: string;
   github?: string;
   live?: string;
+  private?: boolean;
 }
 
 export const projects: Project[] = [
@@ -23,6 +22,7 @@ export const projects: Project[] = [
     image: spamsite,
     tags: ["React", "Frontend", "MongoDB"],
     links: "https://spamorganizations-main.vercel.app",
+    private: false,
   },{
     title: "School Press Advisers' Movement, Inc. Website Admin",
     description:
@@ -30,6 +30,7 @@ export const projects: Project[] = [
     image: spamadmin,
     tags: ["React", "Frontend", "MongoDB"],
     links: "https://spamorganizations-main.vercel.app",
+    private: true,
   },
   {
     title: "Fonzo Calibration",
@@ -38,14 +39,7 @@ export const projects: Project[] = [
     image: fonzo,
     tags: ["React", "Full Stack", "PostgreSQL"],
     links: "https://fonzo-clibrations.vercel.app",
-  },
-  {
-    title: "Photo Booth App",
-    description:
-      "A web-based photo booth with camera capture and image filters.",
-    image: photobooth,
-    tags: ["React", "Frontend"],
-    links: "https://tim-booth.vercel.app",
+    private: true,
   },
   {
     title: "Newjeans UI Design",
@@ -53,15 +47,8 @@ export const projects: Project[] = [
       "Newjeans UI frontend design with responsive layout and animations.",
     image: newjeans,
     tags: ["React", "Frontend"],
-    links: "https://newjeans-web.vercel.app"
-  },
-  {
-    title: "Airbnb Studio",
-    description:
-      "Interactive price and availability prediction tool for Airbnb hosts using XGBoost and Random Forest with monthly trend analysis.",
-    image: airbnb,
-    tags: ["Python", "Streamlit"],
-    links: "https://airbnb-studio-y8v2u46evbu79rmkufjdw3.streamlit.app/",                                                                                                                                                                                    
+    links: "https://newjeans-web.vercel.app",
+    private: false,
   },
 ];
 
@@ -70,19 +57,18 @@ export const projectTags = ["All", ...new Set(projects.flatMap((p) => p.tags))];
 
 export const socialLinks = {
   github: "https://github.com/Timqtzy",
+  behance: "https://www.behance.net/timothytenido",
   email: "mailto:timothytenido@gmail.com",
   discord: "https://discord.com/users/844586000163536906",
 };
 
 export const technologies = [
-  "React (Vite)",
+  "Nextjs",
   "Tailwind CSS",
-  "JavaScript (ES6+)",
   "TypeScript",
-  "MongoDB",
-  "n8n Automation",
-  "Supabase",
-  "Node.js",
+  "Make",
+  "Zapier",
+  "GHL",
   "RESTful APIs",
   "Git & GitHub",
 ];

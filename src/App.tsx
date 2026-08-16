@@ -1,15 +1,16 @@
-import "./App.css";
-import { useEffect, useRef, useState, type FormEvent } from "react";
 import emailjs from "@emailjs/browser";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
-import logo from "./assets/Changli.webp";
-import { FaRegEnvelope } from "react-icons/fa";
-import { RiDiscordLine } from "react-icons/ri";
-import { FiGithub } from "react-icons/fi";
 import { FileDown, MapPin, Menu, X } from "lucide-react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
+import { FaBehance, FaRegEnvelope } from "react-icons/fa";
+import { FiGithub } from "react-icons/fi";
+import { RiDiscordLine } from "react-icons/ri";
+import "./App.css";
+import logo from "./assets/Changli.webp";
+
 import {
   projects,
   projectTags,
@@ -330,11 +331,10 @@ function App() {
                 <button
                   key={item.label}
                   onClick={() => scrollToSection(item.section, item.label)}
-                  className={`px-3 lg:px-4 py-1 rounded-md transition cursor-pointer font-medium text-sm lg:text-base ${
-                    active === item.label
-                      ? "bg-black text-white"
-                      : "text-black hover:bg-gray-100"
-                  }`}
+                  className={`px-3 lg:px-4 py-1 rounded-md transition cursor-pointer font-medium text-sm lg:text-base ${active === item.label
+                    ? "bg-black text-white"
+                    : "text-black hover:bg-gray-100"
+                    }`}
                 >
                   {item.label}
                 </button>
@@ -367,11 +367,10 @@ function App() {
                 <button
                   key={item.label}
                   onClick={() => scrollToSection(item.section, item.label)}
-                  className={`px-4 py-3 rounded-md transition cursor-pointer font-medium text-left ${
-                    active === item.label
-                      ? "bg-black text-white"
-                      : "text-black hover:bg-gray-100"
-                  }`}
+                  className={`px-4 py-3 rounded-md transition cursor-pointer font-medium text-left ${active === item.label
+                    ? "bg-black text-white"
+                    : "text-black hover:bg-gray-100"
+                    }`}
                 >
                   {item.label}
                 </button>
@@ -398,7 +397,7 @@ function App() {
             </div>
             <p className="text-lg md:text-xl text-gray-700 hero-description">
               a college student passionate about web development with a growing
-              interest in Unity and game dev.
+              interest in game development.
             </p>
             <div className="flex flex-wrap gap-3 md:gap-4 py-4 items-center justify-center md:justify-start hero-socials">
               <a
@@ -409,6 +408,15 @@ function App() {
                 className="w-8 h-8 bg-black text-white p-2 rounded-md cursor-pointer hover:bg-gray-800 transition flex items-center justify-center"
               >
                 <FiGithub className="w-full h-full" />
+              </a>
+              <a
+                href={socialLinks.behance}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Visit my Behance profile"
+                className="w-8 h-8 bg-black text-white p-2 rounded-md cursor-pointer hover:bg-gray-800 transition flex items-center justify-center"
+              >
+                <FaBehance className="w-full h-full" />
               </a>
               <a
                 href={socialLinks.email}
@@ -431,7 +439,7 @@ function App() {
                 download
                 className="flex items-center gap-2 bg-white border border-gray-300 px-4 py-2 rounded-md text-black font-semibold cursor-pointer hover:bg-gray-50 transition text-sm md:text-base"
               >
-                Download CV
+                Download Resume
                 <FileDown className="w-4 h-4" />
               </a>
             </div>
@@ -458,11 +466,10 @@ function App() {
             <button
               key={tag}
               onClick={() => setActiveFilter(tag)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition ${
-                activeFilter === tag
-                  ? "bg-red-600 text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition ${activeFilter === tag
+                ? "bg-red-600 text-white"
+                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                }`}
             >
               {tag}
             </button>
@@ -485,15 +492,36 @@ function App() {
                   alt={`Screenshot of ${project.title}`}
                   className="rounded-md mb-3"
                   loading="lazy"
-                  
+
                 />
-                <a
-                  href={project.links || "#"}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <h3 className="font-semibold text-2xl hover:text-red-500">{project.title}</h3>
-                </a>
+
+                {project.private ? (
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-semibold text-2xl">
+                      {project.title}
+                    </h3>
+
+                    <span className="text-xs bg-gray-200 text-gray-600 px-2 py-1 rounded">
+                      Private
+                    </span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <a
+                      href={project.links || "#"}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <h3 className="font-semibold text-2xl hover:text-red-500">
+                        {project.title}
+                      </h3>
+                    </a>
+
+                    <span className="text-xs bg-gray-200 text-gray-600 px-2 py-1 rounded">
+                      Public
+                    </span>
+                  </div>
+                )}
 
                 <p className="text-gray-500 text-sm font-medium mb-2">
                   {project.description}
